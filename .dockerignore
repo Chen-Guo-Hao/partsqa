@@ -1,0 +1,17 @@
+.env
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.git/
+.vscode/
+.idea/
+data/processed/
+data/app/
+data/*.csv
+tests/
+eval/results/
+*.db
+*.log

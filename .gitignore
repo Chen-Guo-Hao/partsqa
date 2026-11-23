@@ -1,0 +1,26 @@
+# 機密：真實環境變數（含 API Key）
+.env
+.streamlit/secrets.toml
+
+# Python
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# 執行時產生的資料（可由程式重建）
+data/processed/
+data/app/
+*.db
+*.tmp.db
+*.log
+
+# 編輯器與系統檔
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

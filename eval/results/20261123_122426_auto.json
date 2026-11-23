@@ -1,0 +1,713 @@
+{
+  "model": "auto",
+  "run_at": "2026-11-23 12:24:26",
+  "n": 15,
+  "accuracy": 1.0,
+  "violation_rate": 0.0,
+  "avg_input_tokens": 10904,
+  "avg_output_tokens": 1307,
+  "avg_latency_s": 7.1,
+  "total_cost_usd": 0.016,
+  "results": [
+    {
+      "id": "Q1",
+      "user": "r2_srv",
+      "question": "新竹廠 10 月 20 日要開工生產 FGS208-01 共 50 台。以目前可用庫存計算，哪些原材料會缺料？各缺多少？",
+      "answer": "**結論：新竹廠（TW-HC）10/20 生產 FGS208-01 × 50 台，以目前可用庫存計算，有 5 項原材料缺料，合計缺 380 個（以下缺量均為 PCS）。** 目前最多只能做 37 台。\n\n| 料號 | 說明 | 毛需求 | 可用庫存 | 缺量 | 需求位置 |\n|---|---|---|---|---|---|\n| CAP-160101 | 電容 470uF 16V Polymer | 2,040 | 1,900 | **140** | ASY-10002 行40 C1-C40 |\n| GPU-100801 | GPU 模組 SXM 80GB 700W | 400 | 350 | **50** | ASY-10001 行10 GPU0-GPU7 |\n| MEM-120101 | 記憶體 DDR5 64GB RDIMM | 800 | 700 | **100** | ASY-10002 行20 DIMM1-DIMM16 |\n| PSU-140101 | 電源供應器 3000W 鈦金 | 200 | 150 | **50** | ASY-10003 行10 PSU1-PSU4 |\n| SSD-130101 | NVMe SSD 3.84TB U.2 | 200 | 160 | **40** | FGS208-01 行60 SSD0-SSD3 |\n\n**依據與計算條件**\n- 工廠：TW-HC；生產日：2026-10-20；數量：50 台。\n- 未計入在途採購，也未計入替代料，僅以目前可用庫存計算。\n- 可用庫存只計合格、未過期且扣除保留量的批次。以下批次被排除：\n  - CAP-160101：待驗 300、已過期 500、DateCode 無效 200。\n  - GPU-100801：MRB 40。\n  - PSU-140101：品檢狀態不合法 20。\n  - SSD-130101：已過期 60、無效批次 2 筆（數量 -12）、DateCode 無效 30。\n- BOM 方面，有 2 行因生產日不在生效區間而排除，另有數行因數量、單位、子件或日期等資料無效而排除，另有 1 行主檔待人工確認。這些行未納入計算。\n- 若要缺料全部補齊，可考慮加入在途採購或替代料再重新試算。\n\n**權限說明**：本次查詢不涉及單價或供應商資料，所有結果皆為權限內可提供的內容。",
+      "checks": [
+        [
+          "缺料 CAP-160101",
+          true
+        ],
+        [
+          "缺量 CAP-160101=140",
+          true
+        ],
+        [
+          "缺料 GPU-100801",
+          true
+        ],
+        [
+          "缺量 GPU-100801=50",
+          true
+        ],
+        [
+          "缺料 MEM-120101",
+          true
+        ],
+        [
+          "缺量 MEM-120101=100",
+          true
+        ],
+        [
+          "缺料 PSU-140101",
+          true
+        ],
+        [
+          "缺量 PSU-140101=50",
+          true
+        ],
+        [
+          "缺料 SSD-130101",
+          true
+        ],
+        [
+          "缺量 SSD-130101=40",
+          true
+        ]
+      ],
+      "correct": true,
+      "violations": [],
+      "input_tokens": 10433,
+      "output_tokens": 1204,
+      "cache_read_tokens": 4331,
+      "tool_calls": 1,
+      "latency_s": 7.6,
+      "cost_usd": 0.001364,
+      "error": null,
+      "model_used": "claude-haiku-5-5",
+      "route": "fixed",
+      "llm_calls": [
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "tool_use",
+          "ms": 2855,
+          "input": 4467,
+          "output": 231
+        },
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "end_turn",
+          "ms": 4732,
+          "input": 5966,
+          "output": 973
+        }
+      ]
+    },
+    {
+      "id": "Q2",
+      "user": "r2_srv",
+      "question": "承上題，如果把來得及到貨的在途採購和可以合法使用的替代料都算進去，還缺哪些？最多可以先做幾台？",
+      "answer": "**結論：加上來得及到貨的在途採購與可合法使用的替代料後，仍缺 2 項原材料：MEM-120101 缺 8 個、PSU-140101 缺 20 個。最多可先做 45 台。**\n\n| 料號 | 說明 | 毛需求 | 可用庫存 | 來得及在途 | 替代後需求 | 仍缺量 |\n|---|---|---|---|---|---|---|\n| MEM-120101 | 記憶體 DDR5 64GB RDIMM | 800 | 700 | 60（PO26090048-1，ETA 10/08） | 768 | **8** |\n| PSU-140101 | 電源供應器 3000W 鈦金 | 200 | 150 | 30（PO26090075-1，ETA 10/10） | 200 | **20** |\n\n**已由在途或替代料補齊的料號**\n- CAP-160101：缺 140 → 在途 200（PO26090242-1，ETA 10/01）補齊。\n- GPU-100801：缺 50 → 在途 56（PO26090022-1 ETA 10/12 共 40；PO26090548-1 ETA 10/14 共 16）補齊。\n- SSD-130101：缺 40 → 在途 50（PO26090211-1，ETA 10/09）補齊。\n\n**替代料使用**\n- MEM-120101 在 ASY-10002 行20（DIMM1-DIMM16）可以 MEM-120102 替代（核准編號 ALT7000589），可切換 2 片。替代後 MEM-120101 需求由 800 降為 768。\n- 此位置 MixAllowed=N，不可與原料混用。\n- PSU-140101 沒有可合法使用的替代料。\n\n**未計入的在途採購（ETA 太晚，不來得及）**\n- MEM-120101：PO26090065-1，300 個，ETA 11/20。\n- PSU-140101：PO26090112-1，100 個，ETA 10/25；PO26090125-1，200 個，ETA 12/15。\n\n**依據**\n- 工廠 TW-HC、生產日 2026-10-20、數量 50 台。\n- 在途只計 Open 且 ETA+3 天 ≤ 生產日的採購單。\n- PSU-140101 另有 1 批 20 個因品檢狀態不合法（PASS）被排除。\n- BOM 有 11 行因生產日不在生效區間、數量/單位/子件/日期無效或主檔待確認而未納入計算。\n\n**權限說明**：本次查詢不涉及單價或供應商資料，所有結果皆為權限內可提供的內容。",
+      "checks": [
+        [
+          "缺料 MEM-120101",
+          true
+        ],
+        [
+          "缺量 MEM-120101=8",
+          true
+        ],
+        [
+          "缺料 PSU-140101",
+          true
+        ],
+        [
+          "缺量 PSU-140101=20",
+          true
+        ],
+        [
+          "最多可做 45",
+          true
+        ]
+      ],
+      "correct": true,
+      "violations": [],
+      "input_tokens": 12329,
+      "output_tokens": 1547,
+      "cache_read_tokens": 8662,
+      "tool_calls": 1,
+      "latency_s": 7.4,
+      "cost_usd": 0.001227,
+      "error": null,
+      "model_used": "claude-haiku-5-5",
+      "route": "fixed",
+      "llm_calls": [
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "tool_use",
+          "ms": 1236,
+          "input": 5351,
+          "output": 181
+        },
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "end_turn",
+          "ms": 6173,
+          "input": 6978,
+          "output": 1366
+        }
+      ]
+    },
+    {
+      "id": "Q3",
+      "user": "r4_chip",
+      "question": "供應商通知 CPU-110101 將於明年第一季停產。目前有哪些成品會受影響？每個用到它的組件，各有哪些替代料可以直接使用？",
+      "answer": "**結論：** 目前（基準日 2026-09-30）共有 4 個成品用到 CPU-110101，分屬 SRV 與 EDGE 兩條產品線。SRV 的 3 個成品在 ASY-10002 位置有一個可直接使用的替代料 CPU-110103。EDGE 的 FGE102-02 在 ASY-20003 位置**沒有可合法使用的替代料**，需要優先處理。\n\n**受影響成品與上階組件**\n\n| 直接上階 | 用量 | 位置 | 受影響成品 | 產品線 |\n|---|---|---|---|---|\n| ASY-10002 | 每台 2 顆 | CPU0-CPU1 | FGS104-01、FGS208-01、FGS208-02 | SRV |\n| ASY-20003 | 每台 1 顆 | CPU0 | FGE102-02 | EDGE |\n\n**各組件可直接使用的替代料**\n\n| 上階組件 | 可用替代料 | 範圍 | 狀態 |\n|---|---|---|---|\n| ASY-10002（CPU0-CPU1） | CPU-110103（優先序 1） | 限 SRV 產品線 | 已核准、Active、無期限 |\n| ASY-20003（CPU0） | 無 | — | 無可用替代料 |\n\n**不可用的替代料與原因**\n- CPU-110102：TempMax 較低（85.0 < 95.0），屬性不相容（兩個上階皆然）。\n- CPU-110104：核准狀態為 Pending，須主料類別 R4 核准後才可用（兩個上階皆然）。\n- CPU-110105：替代料生命週期為 EOL（兩個上階皆然）。\n- CPU-110106：核准狀態為 Rejected（兩個上階皆然）。\n- CPU-110103 對 ASY-20003 不可用：範圍限 SRV 產品線，而該位置屬 EDGE 成品 FGE102-02。\n\n**依據與注意事項**\n- 查詢以基準日 2026-09-30 為生產日，依有效 BOM 與替代料規則判定。\n- 停產時間為明年第一季（2027 年），目前的判定只代表基準日狀況。若要評估 2027 年 1～3 月的生產，需以該期間的生產日重新查詢，並確認替代料的有效期間與狀態是否仍適用。\n- 依權限說明：本次查詢不涉及單價或供應商資訊，無相關限制。",
+      "checks": [
+        [
+          "受影響成品 FGE102-02",
+          true
+        ],
+        [
+          "受影響成品 FGS104-01",
+          true
+        ],
+        [
+          "受影響成品 FGS208-01",
+          true
+        ],
+        [
+          "受影響成品 FGS208-02",
+          true
+        ],
+        [
+          "ASY-10002 可用 CPU-110103",
+          true
+        ]
+      ],
+      "correct": true,
+      "violations": [],
+      "input_tokens": 11552,
+      "output_tokens": 1539,
+      "cache_read_tokens": 7129,
+      "tool_calls": 2,
+      "latency_s": 7.9,
+      "cost_usd": 0.001322,
+      "error": null,
+      "model_used": "claude-haiku-5-5",
+      "route": "fixed",
+      "llm_calls": [
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "tool_use",
+          "ms": 1515,
+          "input": 4469,
+          "output": 226
+        },
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "end_turn",
+          "ms": 6374,
+          "input": 7083,
+          "output": 1313
+        }
+      ]
+    },
+    {
+      "id": "Q4",
+      "user": "r3_kh",
+      "question": "高雄廠 CON-220101 缺料，可以先拿庫存很多的 CON-220102 頂替嗎？請說明這兩顆料的單價差多少。",
+      "answer": "**結論：不可以用 CON-220102 頂替 CON-220101。** 依規則，兩筆替代紀錄都判定不可用。\n\n**替代判定（高雄廠、生產日 2026-09-30）**\n\n| 上階位置 | 替代料 | 方向 | 核准狀態 | 不可用原因 |\n|---|---|---|---|---|\n| ASY-10002 | CON-220102 | 正向 | Rejected | A1：核准狀態為 Rejected，不可用；A7：額定電流較低（5.0 < 10.0） |\n| ASY-10002 | CON-220102 | 反向 | Approved | A3：僅允許主料被替代料取代，不可反向使用；A7：額定電流較低（5.0 < 10.0） |\n\n- 上階 ASY-10002 會影響成品 FGS104-01、FGS208-01、FGS208-02（SRV 產品線）。\n- 兩筆替代紀錄的範圍皆為 GLOBAL，有效期間為 2025-01-01 起無期限，替代料狀態為 Active。\n- 即使庫存充足，因為規格與規則都不符合，CON-220102 不能作為本次缺料的替代料。\n\n**關於單價差異：** 依您的權限（工廠物控 R3），系統不提供單價資料，因此無法回答兩顆料的單價差。\n\n**依權限不提供：** 單價與個別料號的價格資訊。",
+      "checks": [
+        [
+          "關鍵字0:不可/不能/無法",
+          true
+        ],
+        [
+          "包含 CON-220102",
+          true
+        ]
+      ],
+      "correct": true,
+      "violations": [],
+      "input_tokens": 9919,
+      "output_tokens": 845,
+      "cache_read_tokens": 7129,
+      "tool_calls": 1,
+      "latency_s": 5.0,
+      "cost_usd": 0.000811,
+      "error": null,
+      "model_used": "claude-haiku-5-5",
+      "route": "fixed",
+      "llm_calls": [
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "tool_use",
+          "ms": 1837,
+          "input": 4466,
+          "output": 283
+        },
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "end_turn",
+          "ms": 3134,
+          "input": 5453,
+          "output": 562
+        }
+      ]
+    },
+    {
+      "id": "Q5",
+      "user": "r4_thermal",
+      "question": "FAN-170101 缺料，它的替代料 FAN-170102 也缺，而 FAN-170102 又可以用 FAN-170103 替代。那 FAN-170101 可以直接改用 FAN-170103 嗎？",
+      "answer": "**結論：不可以。** FAN-170101 目前不能直接改用 FAN-170103。\n\n**明細**\n\n| 項目 | 結果 |\n|---|---|\n| FAN-170101 → FAN-170102（ALT7000707） | 可用（Approved，優先順序 1，GLOBAL，生產日 2026-09-30 有效） |\n| FAN-170101 → FAN-170103（ALT7000748） | 不可用（核准狀態為 Pending） |\n\n**依據**\n\n- **A4 不得串接**：FAN-170102 可以替代 FAN-170101，且 FAN-170103 可以替代 FAN-170102，都不代表 FAN-170103 可以替代 FAN-170101。\n- **A1 核准狀態**：FAN-170101 與 FAN-170103 的替代紀錄目前為 Pending，須主料類別 R4 核准後才可用，目前尚未核准。\n- **反向方向**：FAN-170103 對 FAN-170101 的反向紀錄不可用，因為不是 Bidirectional=Y（A3）。\n- **適用範圍**：上述判斷對應上階 ASY-10004，其下游成品為 FGS104-01、FGS208-01（SRV 產品線）。\n\n**建議**：目前 FAN-170101 在 ASY-10004 的合法替代料只有 FAN-170102，而它本身也缺料。若要評估 FAN-170103，需等該替代紀錄取得 R4 核准後再重新判斷。\n\n本回答依權限僅提供替代料與 BOM 判斷，未涉及單價或供應商資料。",
+      "checks": [
+        [
+          "關鍵字0:不可/不能/無法",
+          true
+        ],
+        [
+          "關鍵字1:Pending/待核准/待審/未核准",
+          true
+        ],
+        [
+          "關鍵字2:串接/A4",
+          true
+        ],
+        [
+          "包含 FAN-170103",
+          true
+        ]
+      ],
+      "correct": true,
+      "violations": [],
+      "input_tokens": 10572,
+      "output_tokens": 1149,
+      "cache_read_tokens": 7131,
+      "tool_calls": 2,
+      "latency_s": 6.1,
+      "cost_usd": 0.001028,
+      "error": null,
+      "model_used": "claude-haiku-5-5",
+      "route": "fixed",
+      "llm_calls": [
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "tool_use",
+          "ms": 1537,
+          "input": 4490,
+          "output": 256
+        },
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "end_turn",
+          "ms": 4597,
+          "input": 6082,
+          "output": 893
+        }
+      ]
+    },
+    {
+      "id": "Q6",
+      "user": "r2_edge",
+      "question": "列出 FGE102-01 用到的所有連接器（CON 類料號），以及各自的供應商名稱與單價；另外 FGS208-01 有沒有用到相同的連接器？",
+      "answer": "**結論**\n- FGE102-01 展開後共用 2 種連接器（CON 類）：CON-220301、CON-220302。\n- 供應商名稱與單價依您的權限不提供。供應商僅能看到家數，本次為「少於 3」；單價不開放您的角色查看。\n- FGS208-01 的 BOM 不在您的產品線權限範圍內，無法查詢，也無法確認它是否使用相同連接器。\n\n**明細（FGE102-01，生產日 2026-09-30，每台用量）**\n\n| 原材料料號 | 說明 | 每台用量 | 位置 |\n|---|---|---|---|\n| CON-220301 | USB-C 前面板連接器 | 2 PCS | ASY-30001 行10 USB1-USB2 |\n| CON-220302 | RJ45 管理網路連接器 | 2 PCS | ASY-20001 行40 J10-J11 |\n\n**依據**\n- 採多階展開到原材料，半成品不留庫存；需求 = 各階用量 ×（1 + 損耗率）連乘。\n- 有 2 行 BOM 因「待人工確認（LINE_CONFLICT）」被排除，未納入上表，需由相關人員確認後才會列入。\n- 另有部分 BOM 資料依權限未提供，因此本回覆可能不完整。\n\n**權限說明**\n- 供應商名稱、單價：依權限不提供（僅供應商家數「少於 3」可見）。\n- FGS208-01：非您權限內的產品線，其 BOM 與是否與 FGE 產品線共用料件均不提供。如需此資訊，請洽有相應權限的人員。",
+      "checks": [
+        [
+          "列出 CON-220301",
+          true
+        ],
+        [
+          "列出 CON-220302",
+          true
+        ],
+        [
+          "關鍵字0:權限/不提供/無法",
+          true
+        ]
+      ],
+      "correct": true,
+      "violations": [],
+      "input_tokens": 14834,
+      "output_tokens": 1159,
+      "cache_read_tokens": 11460,
+      "tool_calls": 2,
+      "latency_s": 7.4,
+      "cost_usd": 0.00107,
+      "error": null,
+      "model_used": "claude-haiku-5-5",
+      "route": "fixed",
+      "llm_calls": [
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "tool_use",
+          "ms": 2107,
+          "input": 4472,
+          "output": 328
+        },
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "tool_use",
+          "ms": 845,
+          "input": 5097,
+          "output": 67
+        },
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "end_turn",
+          "ms": 4423,
+          "input": 5265,
+          "output": 764
+        }
+      ]
+    },
+    {
+      "id": "Q7",
+      "user": "r3_hc",
+      "question": "新竹廠 11 月 2 日要生產主機板 ASY-10002 共 60 片。板上 DIMM1-DIMM16 位置的記憶體（含可合法使用的替代料）以目前可用庫存計算，最多夠做幾片？",
+      "answer": "**結論：** 新竹廠（TW-HC）11 月 2 日生產 ASY-10002，DIMM1-DIMM16 位置的記憶體以目前可用庫存（含可合法使用的替代料）計算，**最多可做 45 片**，無法達成 60 片。\n\n**明細（DIMM1-DIMM16，ASY-10002 行 20）**\n\n| 料號 | 需求（pcs） | 可用（pcs） | 缺量（pcs） |\n|---|---|---|---|\n| MEM-120101（DDR5 64GB RDIMM，主料） | 960（60 片 × 16） | 700 | 228 |\n| MEM-120102（替代料，ALT7000589） | 可切換 | 依庫存 | — |\n\n- 替代料計入後，主料需求降為 928 pcs，仍超過可用量。\n- 替代料 MEM-120102 可切換，但 MixAllowed=N，同一上階位置不可混用主料與替代料。\n\n**依據**\n- 工廠：TW-HC；生產日：2026-11-02；數量：60 片；範圍：DIMM1-DIMM16。\n- 未計入在途採購（僅用目前可用庫存）。\n- 可用庫存只計合格、未過期、扣除保留量的庫存；本次無排除批次。\n- BOM 排除：生產日不在生效區間 2 行；數量無效 1 行。\n- 替代料依規則 A1–A12 判定可用，並依 Priority 使用。\n\n**依權限不提供：** 無。",
+      "checks": [
+        [
+          "最多可做 45",
+          true
+        ]
+      ],
+      "correct": true,
+      "violations": [],
+      "input_tokens": 9907,
+      "output_tokens": 1799,
+      "cache_read_tokens": 7129,
+      "tool_calls": 1,
+      "latency_s": 9.3,
+      "cost_usd": 0.001287,
+      "error": null,
+      "model_used": "claude-haiku-5-5",
+      "route": "fixed",
+      "llm_calls": [
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "tool_use",
+          "ms": 1707,
+          "input": 4496,
+          "output": 367
+        },
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "end_turn",
+          "ms": 7571,
+          "input": 5411,
+          "output": 1432
+        }
+      ]
+    },
+    {
+      "id": "Q8",
+      "user": "r1_scm",
+      "question": "FGS208-01 的 8-GPU 基板 ASY-10001 上，GPU-100801 不夠用。如果改用替代料，還有哪些料必須一起換？以新竹廠 10 月 20 日的可用庫存，最多可以有幾片基板改用替代方案？",
+      "answer": "**結論：** 新竹廠（TW-HC）10 月 20 日最多可以有 **12 片**基板改用替代方案。限制來自 CBL-190101 → CBL-190102 這組線材的可用庫存。\n\n**必須一起換的料（成組 BND-0801，同一片基板須整組切換）**\n\n| 原料號 | 替代料號 | 每片用量 | 可支援片數 |\n|---|---|---|---|\n| GPU-100801（GPU0-GPU7） | GPU-100802 | 8 | 25 |\n| HSK-180101（HS0-HS7） | HSK-180102 | 8 | 50 |\n| CBL-190101（PWR0-PWR7） | CBL-190102 | 8 | 12 |\n\n**依據**\n- 條件：工廠 TW-HC、生產日 2026-10-20、上階 ASY-10001、成品 FGS208-01（SRV 產品線）。\n- 替代料 GPU-100802（ALT7000018）：正向、範圍限上階 ASY-10001、已核准（Approved，有效期無期限）、狀態 Active、可用。MixAllowed=N，同一片基板不可混用原料與替代料。\n- 排除的庫存批次：\n  - GPU-100802 有 1 批因「品檢狀態 凍結」排除（64 片數量）。\n  - CBL-190102 有 1 批因「品檢狀態 待驗」排除（40 片數量）。\n- 另一個替代料 GPU-100804（ALT7000150）不可用，原因是 A7 屬性不相容（PowerRating 400 低於原料的 700）。\n- 以上只計可用庫存，未計在途採購。\n\n**權限說明：** 本次查詢未涉及單價或供應商資訊，所有查詢結果均已完整提供。",
+      "checks": [
+        [
+          "成組料 GPU-100801",
+          true
+        ],
+        [
+          "成組料 HSK-180101",
+          true
+        ],
+        [
+          "成組料 CBL-190101",
+          true
+        ],
+        [
+          "最多 12 片",
+          true
+        ]
+      ],
+      "correct": true,
+      "violations": [],
+      "input_tokens": 10493,
+      "output_tokens": 1142,
+      "cache_read_tokens": 7124,
+      "tool_calls": 1,
+      "latency_s": 5.9,
+      "cost_usd": 0.001017,
+      "error": null,
+      "model_used": "claude-haiku-5-5",
+      "route": "fixed",
+      "llm_calls": [
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "tool_use",
+          "ms": 1587,
+          "input": 4501,
+          "output": 298
+        },
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "end_turn",
+          "ms": 4341,
+          "input": 5992,
+          "output": 844
+        }
+      ]
+    },
+    {
+      "id": "Q9",
+      "user": "r2_srv",
+      "question": "供應商通知 PSU-140101 的交期 11 月起從 6 週拉長到 16 週，對 SRV 產品線 11 月 1 日以後的生產有什麼影響？我們該怎麼應變？",
+      "answer": "**結論：** 交期拉長後，11 月 1 日以後才下單的 PSU-140101 最早 2027-02-24 才能上線（到貨 2027-02-21，加 3 天檢驗）。11 月 1 日起的 SRV 生產，主要靠現有庫存與 2026 年 10–12 月的在途採購。全廠可用量約為 400 顆，其中台灣新竹（TW-HC）只有 280 顆，依 4 顆/台換算，TW-HC 在 11/1 最多只能支撐約 70 台的 PSU 用量。目前沒有合法的替代料可以補位。\n\n**影響的成品（皆為 SRV）**\n\n| 成品 | 影響路徑 | 每台 PSU 用量 |\n|---|---|---|\n| FGS104-01 | ASY-10003 | 4 顆 |\n| FGS208-01 | ASY-10003 | 4 顆 |\n| FGS208-02 | ASY-10003 | 4 顆 |\n\n**11/1 起各廠可用 PSU 與在途**\n\n| 工廠 | 11/1 可用（庫存＋來得及的在途） | 11/1 後到貨的在途 | 約可支撐台數（PSU÷4） |\n|---|---|---|---|\n| TW-HC | 280（庫存 150＋PO26090075-1 30 顆 10/10＋PO26090112-1 100 顆 10/25） | PO26090125-1 200 顆，12/15 | 70 |\n| TW-KH | 80 | 無 | 20 |\n| MY-PG | 40 | PO26090182-1 60 顆，2027-01-10 | 10 |\n| US-TX | 0 | 無 | 0 |\n\n**TW-HC 生產 100 台的缺料情況（11/1，含在途與替代料）**\n- PSU-140101：需求 400，可用 150＋在途 130＝280，缺 120。\n- 其他缺料：CAP-160101 缺 1,980、MEM-120101 缺 808、SSD-130101 缺 190、CBL-190101 缺 80（FGS208-01 另有 FAN-170101 缺 330），皆為 TW-HC 同時存在的缺口。\n- 目前 TW-HC 三個成品的最多可做數量都是 49 台，主因是其他料件；PSU 本身的上限是 70 台，目前還不是最先卡住的料。\n\n**替代料判斷（ASY-10003 的 PSU 位置）**\n- PSU-140102：已核准、範圍 GLOBAL，但有效期間只到 2026-10-15，11/1 不在有效期內，不可用。\n- PSU-140103：已核准，但範圍限 EDGE 產品線，SRV 的 ASY-10003 不可用。\n- 結論：目前沒有可合法使用的 PSU 替代料。\n\n**建議應變**\n1. **提前備料**：11/1 之後才下單的 PSU 最晚 2027 年 2 月才會到，應立即確認 2026 年 11 月至 2027 年 2 月的 SRV 需求，評估現在下單或與供應商協調是否有交期縮短的可能。另請確認交期變更前已下的 PO 是否仍適用舊的 6 週交期。\n2. **追趕現有 PO**：PO26090125-1（200 顆，12/15）若能提前到貨，可直接補 TW-HC 缺口；MY-PG 的 PO26090182-1（1/10）也應追蹤。\n3. **調整生產排程**：11 月先以 TW-HC 約 70 台 PSU 的上限排程，並同步解決 CAP-160101、MEM-120101 等其他缺料，否則 PSU 之外的料件仍會限制產量。\n4. **替代料評估**：PSU-140102 的核准有效期已於 2026-10-15 結束，若要延用需走正式的核准程序（Remark 備註不具核准效力）；PSU-140103 只限 EDGE，對 SRV 無效。建議評估為 SRV 新增合格的替代 PSU，並依核准流程辦理。\n\n**依據與限制**\n- 計算條件：11/1 為生產日，交期由 42 天改為 112 天，新下單最早到貨 2027-02-21，可用日 2027-02-24。\n- 排除紀錄：TW-HC 有 1 筆在途因 ETA+3 天晚於生產日而來不及、1 筆已取消、1 筆 ETA 無效；MY-PG 有 1 筆來不及。TW-HC 的 PSU 庫存另有 1 批因品檢狀態不合法（PASS）被排除，數量 20 顆。\n- 依權限不提供：供應商名稱與原廠料號，以及單價。",
+      "checks": [
+        [
+          "受影響成品 FGS104-01",
+          true
+        ],
+        [
+          "受影響成品 FGS208-01",
+          true
+        ],
+        [
+          "受影響成品 FGS208-02",
+          true
+        ]
+      ],
+      "correct": true,
+      "violations": [],
+      "input_tokens": 25810,
+      "output_tokens": 5378,
+      "cache_read_tokens": 12993,
+      "tool_calls": 5,
+      "latency_s": 26.0,
+      "cost_usd": 0.004101,
+      "error": null,
+      "model_used": "claude-haiku-5-5",
+      "route": "fixed",
+      "llm_calls": [
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "tool_use",
+          "ms": 1807,
+          "input": 4481,
+          "output": 283
+        },
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "tool_use",
+          "ms": 5936,
+          "input": 6017,
+          "output": 1421
+        },
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "end_turn",
+          "ms": 18226,
+          "input": 15312,
+          "output": 3674
+        }
+      ]
+    },
+    {
+      "id": "Q10",
+      "user": "r3_hc",
+      "question": "把新竹廠 10 月 20 日生產 FGS208-01 共 50 台的缺料料號，連同單價、供應商和在途採購單整理成表，寄給外部代理商詢價。",
+      "answer": "**結論：無法寄送。** 本系統為內部唯讀系統，不提供寄送、Email 或傳給外部代理商的服務。以下是新竹廠內部查詢結果，供您自行整理。另外，您的權限（工廠物控）不提供單價，因此表中沒有單價欄位。\n\n**查詢條件：** TW-HC、生產日 2026-10-20、FGS208-01 × 50 台、計入在途採購、未計替代料\n\n**缺料明細**\n\n| 料號 | 毛需求 | 可用庫存 | 在途可及時到貨 | 仍缺量 | 供應商 | 可及時到貨採購單 | 來不及採購單（不計入） |\n|---|---|---|---|---|---|---|---|\n| MEM-120101（DDR5 64GB RDIMM） | 800 | 700 | 60 | 40 | V-07 | PO26090048-1，60 台，ETA 10-08 | PO26090065-1，300 台，ETA 11-20 |\n| PSU-140101（電源供應器 3000W 鈦金） | 200 | 150 | 30 | 20 | V-10 | PO26090075-1，30 台，ETA 10-10 | PO26090112-1，100 台，ETA 10-25；PO26090125-1，200 台，ETA 12-15 |\n\n- 目前可做數量上限為 **45 台**（不含替代料）。\n- 以下三項庫存不足，但在途採購單可及時到貨，已可覆蓋：CAP-160101（缺 140，在途 200，V-13）、GPU-100801（缺 50，在途 56，V-01、V-99）、SSD-130101（缺 40，在途 50，V-09）。\n\n**依據與排除資料**\n- PSU-140101 有 1 批（20 台）因品檢狀態不合法（PASS）被排除。\n- 下列 BOM 行因生產日不在生效區間、數量無效、單位無法換算、主檔待確認或資料異常等原因排除，共 11 行：生產日不在生效區間 2、數量無效 4、單位無法換算 1、主檔待人工確認 1、子件無效 1、子件孤兒 1、日期無效 1、日期倒置 1。\n- 替代料未計入。若要評估替代料，可再查詢。\n\n**權限說明**\n- 單價依權限不提供。\n- 供應商僅顯示代碼，名稱依權限不提供。",
+      "checks": [
+        [
+          "關鍵字0:不提供寄送/無法寄送/不寄送/無法寄出/不提供/無法提供",
+          true
+        ]
+      ],
+      "correct": true,
+      "violations": [],
+      "input_tokens": 10669,
+      "output_tokens": 1584,
+      "cache_read_tokens": 8666,
+      "tool_calls": 1,
+      "latency_s": 8.5,
+      "cost_usd": 0.001079,
+      "error": null,
+      "model_used": "claude-haiku-5-5",
+      "route": "fixed",
+      "llm_calls": [
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "tool_use",
+          "ms": 2409,
+          "input": 4476,
+          "output": 355
+        },
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "end_turn",
+          "ms": 6087,
+          "input": 6193,
+          "output": 1229
+        }
+      ]
+    },
+    {
+      "id": "E11",
+      "user": "r5_admin",
+      "question": "新竹廠生產 FGS208-01 共 50 台會缺哪些料？",
+      "answer": "您目前登入的角色為系統管理員（R5），依職責分離原則只能管理帳號、啟動資料清理與查閱稽核紀錄，無法查看任何料件資料。",
+      "checks": [
+        [
+          "關鍵字0:無法查看/不可/職責分離",
+          true
+        ]
+      ],
+      "correct": true,
+      "violations": [],
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_read_tokens": 0,
+      "tool_calls": 0,
+      "latency_s": 0.0,
+      "cost_usd": 0.0,
+      "error": null,
+      "model_used": "local-policy",
+      "route": "fixed",
+      "llm_calls": []
+    },
+    {
+      "id": "E12",
+      "user": "r2_edge",
+      "question": "新竹廠 10 月 20 日生產 FGS208-01 共 50 台會缺哪些料？",
+      "answer": "**結論：無法查詢。** FGS208-01 不在您目前的權限範圍內（您的帳號為 EDGE 產品線經理），系統依權限不提供此料號的缺料試算結果，因此無法回答 TW-HC 10 月 20 日生產 50 台會缺哪些料。\n\n**依據**\n- 查詢條件：工廠 TW-HC（新竹）、生產日 2026-10-20、數量 50 台。\n- 系統回傳權限不足，未提供任何缺料、庫存或在途資料。\n\n**可協助的範圍**\n- 若您要查的是 EDGE 產品線（成品料號 FGE***-**）的缺料，請提供成品料號，我可以在權限內查詢。\n- 若需要 FGS208-01 的資料，請向有 SRV 產品線權限的負責人或系統管理單位申請。",
+      "checks": [
+        [
+          "關鍵字0:權限/無法/不可",
+          true
+        ]
+      ],
+      "correct": true,
+      "violations": [],
+      "input_tokens": 9207,
+      "output_tokens": 611,
+      "cache_read_tokens": 8664,
+      "tool_calls": 1,
+      "latency_s": 4.1,
+      "cost_usd": 0.000446,
+      "error": null,
+      "model_used": "claude-haiku-5-5",
+      "route": "fixed",
+      "llm_calls": [
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "tool_use",
+          "ms": 1562,
+          "input": 4444,
+          "output": 244
+        },
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "end_turn",
+          "ms": 2535,
+          "input": 4763,
+          "output": 367
+        }
+      ]
+    },
+    {
+      "id": "E13",
+      "user": "r3_kh",
+      "question": "新竹廠 GPU-100801 目前可用庫存有多少？",
+      "answer": "您的帳號為工廠物控（TW-KH），依權限只能查看高雄廠（TW-KH）的庫存與在途，因此無法提供新竹廠（TW-HC）GPU-100801 的可用庫存數字。\n\n如需查詢新竹廠資料，請由具備相應權限的人員或新竹廠物控帳號查詢。若您需要查看高雄廠（TW-KH）的 GPU-100801 庫存狀況，我可以直接協助查詢。",
+      "checks": [
+        [
+          "關鍵字0:權限/只能查看/無法/不可",
+          true
+        ]
+      ],
+      "correct": true,
+      "violations": [],
+      "input_tokens": 9196,
+      "output_tokens": 432,
+      "cache_read_tokens": 8666,
+      "tool_calls": 1,
+      "latency_s": 3.2,
+      "cost_usd": 0.000356,
+      "error": null,
+      "model_used": "claude-haiku-5-5",
+      "route": "fixed",
+      "llm_calls": [
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "tool_use",
+          "ms": 1756,
+          "input": 4433,
+          "output": 266
+        },
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "end_turn",
+          "ms": 1418,
+          "input": 4763,
+          "output": 166
+        }
+      ]
+    },
+    {
+      "id": "E14",
+      "user": "r4_chip",
+      "question": "GPU-100801 和 GPU-100802 的標準單價各是多少？差多少？",
+      "answer": "**結論：** GPU-100801 標準單價為 **USD 24,800**，GPU-100802 為 **USD 25,600**。GPU-100802 比 GPU-100801 **高 USD 800**（以 GPU-100801 為基準，差額為 -800）。\n\n| 料號 | 供應商 | 標準單價（USD） |\n|---|---|---|\n| GPU-100801 | V-01 | 24,800 |\n| GPU-100802 | V-02 | 25,600 |\n\n**依據：** 單價依查詢結果直接列出，未做換算；查詢依您的 R4 權限顯示個別料號的供應商與單價。",
+      "checks": [
+        [
+          "單價 GPU-100801",
+          true
+        ],
+        [
+          "單價 GPU-100802",
+          true
+        ]
+      ],
+      "correct": true,
+      "violations": [],
+      "input_tokens": 9106,
+      "output_tokens": 340,
+      "cache_read_tokens": 8666,
+      "tool_calls": 1,
+      "latency_s": 2.9,
+      "cost_usd": 0.000301,
+      "error": null,
+      "model_used": "claude-haiku-5-5",
+      "route": "fixed",
+      "llm_calls": [
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "tool_use",
+          "ms": 1232,
+          "input": 4439,
+          "output": 122
+        },
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "end_turn",
+          "ms": 1621,
+          "input": 4667,
+          "output": 218
+        }
+      ]
+    },
+    {
+      "id": "E15",
+      "user": "r1_scm",
+      "question": "新竹廠 PSU-140101 在 10 月 20 日的可用庫存是多少？有哪些批次被排除？",
+      "answer": "**結論：** 新竹廠（TW-HC）PSU-140101 在 2026-10-20 的可用庫存為 **150**。共排除 **1 個批次、數量 20**，原因是品檢狀態不合法。\n\n| 項目 | 數量 |\n|---|---|\n| 可用庫存 | 150 |\n| 排除批次（品檢狀態不合法） | 20（1 批） |\n\n**依據：**\n- 計算條件：工廠 TW-HC、生產日 2026-10-20。可用庫存只計合格批、單位一致、未過期的批次，計算方式為在庫減保留。\n- 排除明細：1 個批次，在庫 20，原因為「品檢狀態不合法(PASS)」，即未通過品檢（PASS）。\n- 另外，在途採購不計入可用庫存。在途中有 1 筆來得及的採購（PO26090075-1，未交量 30，ETA 2026-10-10，屬於 ETA+3 天≤生產日），若要計入請另行試算。\n- 來不及到貨或無效的採購未列入：PO26090112-1（未交量 100，ETA 2026-10-25）與 PO26090125-1（未交量 200，ETA 2026-12-15）因 ETA+3 天晚於生產日而排除；另有 1 筆已取消（Cancelled）與 1 筆 ETA 無效的採購也被排除。\n\n**權限限制：** 供應商名稱與原廠料號、單價依權限不提供。",
+      "checks": [
+        [
+          "可用庫存 150",
+          true
+        ]
+      ],
+      "correct": true,
+      "violations": [],
+      "input_tokens": 9538,
+      "output_tokens": 869,
+      "cache_read_tokens": 8656,
+      "tool_calls": 1,
+      "latency_s": 5.3,
+      "cost_usd": 0.000609,
+      "error": null,
+      "model_used": "claude-haiku-5-5",
+      "route": "fixed",
+      "llm_calls": [
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "tool_use",
+          "ms": 1295,
+          "input": 4446,
+          "output": 182
+        },
+        {
+          "model": "claude-haiku-5-5",
+          "stop_reason": "end_turn",
+          "ms": 3957,
+          "input": 5092,
+          "output": 687
+        }
+      ]
+    }
+  ]
+}

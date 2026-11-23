@@ -1,0 +1,5 @@
+# 統一換行：程式與文字檔在版控中一律 LF；Shell 腳本在 Windows 取出時也保持 LF（容器內才能執行）
+* text=auto
+*.sh text eol=lf
+Dockerfile text eol=lf
+*.png binary

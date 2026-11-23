@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - name: Install dependencies
+        run: pip install -r requirements.txt pytest==9.2.0 ruff==0.17.6
+      - name: Lint (ruff)
+        run: ruff check .
+      - name: Tests (pytest, Mock LLM — 不呼叫 API)
+        run: pytest -q
+        env:
+          PQA_MOCK_LLM: "1"
+      - name: Cleaning smoke test on sample data
+        run: |
+          python - <<'PY'
+          from partsqa.cleaning import run_cleaning
+          from partsqa.config import get_settings
+          s = get_settings()
+          stats = run_cleaning(s.data_dir, s.clean_db, s.report_dir)
+          print({k: (v["raw_rows"], v["ok"], v["invalid"], v["pending"]) for k, v in stats["counts"].items()})
+          assert stats["review_items"] > 0
+          PY

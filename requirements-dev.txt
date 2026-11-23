@@ -1,0 +1,6 @@
+# 開發與測試用（部署時只需要 requirements.txt）
+-r requirements.txt
+pytest==9.2.0
+ruff==0.17.6
+# 產生 README 截圖（使用本機 Edge／Chrome，不需另外下載瀏覽器）
+playwright==1.65.2

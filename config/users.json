@@ -1,0 +1,80 @@
+[
+  {
+    "username": "r1_scm",
+    "role": "R1",
+    "scope": "",
+    "display_name": "供應鏈主管"
+  },
+  {
+    "username": "r2_srv",
+    "role": "R2",
+    "scope": "SRV",
+    "display_name": "產品線經理（資料中心伺服器）"
+  },
+  {
+    "username": "r2_edge",
+    "role": "R2",
+    "scope": "EDGE",
+    "display_name": "產品線經理（邊緣運算主機）"
+  },
+  {
+    "username": "r3_hc",
+    "role": "R3",
+    "scope": "TW-HC",
+    "display_name": "工廠物控（新竹）"
+  },
+  {
+    "username": "r3_kh",
+    "role": "R3",
+    "scope": "TW-KH",
+    "display_name": "工廠物控（高雄）"
+  },
+  {
+    "username": "r3_pg",
+    "role": "R3",
+    "scope": "MY-PG",
+    "display_name": "工廠物控（檳城）"
+  },
+  {
+    "username": "r3_tx",
+    "role": "R3",
+    "scope": "US-TX",
+    "display_name": "工廠物控（德州）"
+  },
+  {
+    "username": "r4_chip",
+    "role": "R4",
+    "scope": "運算晶片",
+    "display_name": "零件工程師（運算晶片）"
+  },
+  {
+    "username": "r4_mem",
+    "role": "R4",
+    "scope": "記憶體與儲存",
+    "display_name": "零件工程師（記憶體與儲存）"
+  },
+  {
+    "username": "r4_power",
+    "role": "R4",
+    "scope": "電源與被動元件",
+    "display_name": "零件工程師（電源與被動元件）"
+  },
+  {
+    "username": "r4_thermal",
+    "role": "R4",
+    "scope": "散熱與機構",
+    "display_name": "零件工程師（散熱與機構）"
+  },
+  {
+    "username": "r4_conn",
+    "role": "R4",
+    "scope": "連接與網通",
+    "display_name": "零件工程師（連接與網通）"
+  },
+  {
+    "username": "r5_admin",
+    "role": "R5",
+    "scope": "",
+    "display_name": "系統管理員"
+  }
+]

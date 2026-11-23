@@ -1,0 +1,17 @@
+[project]
+name = "partsqa"
+version = "1.0.0"
+requires-python = ">=3.11"
+
+[tool.ruff]
+line-length = 140
+target-version = "py311"
+extend-exclude = [".venv", "data"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "BLE"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["realdata: 需要已清理的真實資料庫", "live: 呼叫真實 LLM API（需 API Key，會產生費用）"]

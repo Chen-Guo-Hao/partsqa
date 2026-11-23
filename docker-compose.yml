@@ -1,0 +1,22 @@
+services:
+  partsqa:
+    build: .
+    image: partsqa:1.0.0
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env            # ANTHROPIC_API_KEY、PQA_SEED_PASSWORD 等（不進映像檔）
+    environment:
+      PQA_DATA_DIR: /app/sample_data
+      PQA_CLEAN_DB: /app/data/processed/partsqa_clean.db
+      PQA_APP_DB: /app/data/app/partsqa_app.db
+      PQA_REPORT_DIR: /app/data/processed
+    volumes:
+      - ./data:/app/sample_data:ro           # 6 個範例 CSV 與資料字典（唯讀）
+      - pqa_processed:/app/data/processed    # 清理後資料庫（可重建）
+      - pqa_app:/app/data/app                # 帳號、稽核、核准紀錄（持久保存）
+    restart: unless-stopped
+
+volumes:
+  pqa_processed:
+  pqa_app:

@@ -1,0 +1,3 @@
+[client]
+# 隱藏右上角的開發者工具列（Deploy / Stop），讓展示畫面更乾淨
+toolbarMode = "minimal"

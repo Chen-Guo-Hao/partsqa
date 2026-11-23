@@ -1,0 +1,35 @@
+{
+  "system_name": "AI 伺服器料件智慧問答系統（PartsQA）",
+  "company_context": "公司 AI 伺服器事業有「資料中心伺服器（SRV）」與「邊緣運算主機（EDGE）」兩條產品線",
+  "baseline_date": "2026-09-30",
+  "files": {
+    "parts_master": "item_master.csv",
+    "part_attributes": "item_specs.csv",
+    "bom": "bill_of_materials.csv",
+    "alternates": "substitutes.csv",
+    "inventory": "stock_lots.csv",
+    "open_po": "purchase_orders.csv"
+  },
+  "part_patterns": {
+    "FG": "^FG(?P<line>[SE])(?P<model>\\d{3})-(?P<rev>\\d{2})$",
+    "SA": "^ASY-\\d{5}$",
+    "RM": "^(?P<commodity>[A-Z]{3})-\\d{6}$"
+  },
+  "product_lines": {
+    "S": {"code": "SRV", "name": "資料中心伺服器"},
+    "E": {"code": "EDGE", "name": "邊緣運算主機"}
+  },
+  "plants": {
+    "TW-HC": {"name": "台灣-新竹", "aliases": ["TWHC", "台灣-新竹", "新竹廠"]},
+    "TW-KH": {"name": "台灣-高雄", "aliases": ["TWKH", "台灣-高雄", "高雄廠"]},
+    "MY-PG": {"name": "馬來西亞-檳城", "aliases": ["MYPG", "馬來西亞-檳城", "檳城廠"]},
+    "US-TX": {"name": "美國-德州", "aliases": ["USTX", "美國-德州", "德州廠"]}
+  },
+  "commodity_groups": {
+    "運算晶片": ["GPU", "CPU", "ASC"],
+    "記憶體與儲存": ["MEM", "SSD", "FLS"],
+    "電源與被動元件": ["PSU", "VRM", "CAP", "IND", "RES"],
+    "散熱與機構": ["FAN", "HSK", "CLP", "MEC"],
+    "連接與網通": ["CON", "CBL", "NIC", "OPT", "PCB"]
+  }
+}
