@@ -10,8 +10,7 @@
 ![SQLite](https://img.shields.io/badge/DB-SQLite-003B57?logo=sqlite&logoColor=white)
 ![Tests](https://img.shields.io/badge/tests-67%20passed-2EA44F)
 ![License](https://img.shields.io/badge/license-MIT-blue)
-<!-- 上傳 GitHub 後，可把下一行的 YOUR_GITHUB_ID 換成你的帳號，顯示 CI 狀態 -->
-<!-- ![CI](https://github.com/YOUR_GITHUB_ID/partsqa/actions/workflows/ci.yml/badge.svg) -->
+[![CI](https://github.com/Chen-Guo-Hao/partsqa/actions/workflows/ci.yml/badge.svg)](https://github.com/Chen-Guo-Hao/partsqa/actions/workflows/ci.yml)
 
 > **線上 Demo：** [https://YOUR-APP.streamlit.app](https://YOUR-APP.streamlit.app)（免安裝、免密碼，點選角色即可登入；部署方式見[第 9 節](#9-部署線上-demo)）
 >
@@ -260,7 +259,7 @@ flowchart LR
 需求：Windows／macOS／Linux、Python 3.11 以上。以下為 Windows PowerShell 指令。
 
 ```powershell
-git clone https://github.com/YOUR_GITHUB_ID/partsqa.git
+git clone https://github.com/Chen-Guo-Hao/partsqa.git
 ```
 
 ```powershell
