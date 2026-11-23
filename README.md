@@ -12,7 +12,7 @@
 ![License](https://img.shields.io/badge/license-MIT-blue)
 [![CI](https://github.com/Chen-Guo-Hao/partsqa/actions/workflows/ci.yml/badge.svg)](https://github.com/Chen-Guo-Hao/partsqa/actions/workflows/ci.yml)
 
-> **線上 Demo：** [https://YOUR-APP.streamlit.app](https://YOUR-APP.streamlit.app)（免安裝、免密碼，點選角色即可登入；部署方式見[第 9 節](#9-部署線上-demo)）
+> **線上 Demo：** [https://partsapp-fj7ui3y8mew34d6fpqyjeu.streamlit.app/](https://partsapp-fj7ui3y8mew34d6fpqyjeu.streamlit.app/)（免安裝、免密碼，點選角色即可登入；部署方式見[第 9 節](#9-部署線上-demo)）
 >
 > 專案內的資料皆為虛構範例資料，不含任何真實公司資料。
 
